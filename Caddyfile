@@ -1,0 +1,45 @@
+# ─────────────────────────────────────────────────────────────
+# UI — bosh sayt
+# ─────────────────────────────────────────────────────────────
+family.svlab.uz {
+    reverse_proxy family-tree-ui:80
+    encode gzip zstd
+}
+
+# ─────────────────────────────────────────────────────────────
+# Admin panel
+# ─────────────────────────────────────────────────────────────
+admin.ft.svlab.uz {
+    reverse_proxy family-tree-admin:80
+    encode gzip zstd
+}
+
+# ─────────────────────────────────────────────────────────────
+# API
+# ─────────────────────────────────────────────────────────────
+api.my-family.svlab.uz {
+    reverse_proxy family-tree-api:8080 {
+        # Real client IP'ni .NET ilovasiga uzatish
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Fayl yuklashlar uchun (UploadedFileController) — default 10MB ga oshirish
+    request_body {
+        max_size 50MB
+    }
+}
+
+# ─────────────────────────────────────────────────────────────
+# Development Telegram bot — notification gateway
+# ─────────────────────────────────────────────────────────────
+development-tg-bot.api.svlab.uz {
+    reverse_proxy development-tg-bot:8080 {
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    encode gzip zstd
+}

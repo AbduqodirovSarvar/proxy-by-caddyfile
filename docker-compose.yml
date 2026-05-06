@@ -1,0 +1,27 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"      # HTTP (Let's Encrypt challenge va HTTPS redirect uchun)
+      - "443:443"    # HTTPS
+      - "443:443/udp"  # HTTP/3 (QUIC)
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data        # SSL sertifikatlar va kalitlar (saqlanishi shart)
+      - caddy-config:/config    # Avtomatik generated Caddy state
+    networks:
+      - global-net
+
+networks:
+  # `database` repo yaratgan tashqi network — Caddy shu yerdagi
+  # family-tree-api, family-tree-admin, family-tree-ui container'lariga
+  # DNS (container nomi) orqali ulanadi.
+  global-net:
+    external: true
+    name: global-app-network
+
+volumes:
+  caddy-data:
+  caddy-config:
