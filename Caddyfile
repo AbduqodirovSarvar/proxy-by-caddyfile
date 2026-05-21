@@ -43,3 +43,11 @@ development-tg-bot.api.svlab.uz {
 
     encode gzip zstd
 }
+
+# ─────────────────────────────────────────────────────────────
+# My Portfolio
+# ─────────────────────────────────────────────────────────────
+svlab.uz {
+    root * /root/svlab/cv/MyPortfolio_
+    file_server
+}
