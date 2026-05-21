@@ -48,6 +48,6 @@ development-tg-bot.api.svlab.uz {
 # My Portfolio
 # ─────────────────────────────────────────────────────────────
 svlab.uz {
-    root * /root/svlab/cv/MyPortfolio_
+    root * /srv/portfolio
     file_server
 }

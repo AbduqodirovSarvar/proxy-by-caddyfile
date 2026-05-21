@@ -11,6 +11,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data        # SSL sertifikatlar va kalitlar (saqlanishi shart)
       - caddy-config:/config    # Avtomatik generated Caddy state
+      - /root/svlab/cv/MyPortfolio_:/srv/portfolio:ro # Portfolio fayllarini Caddy'ga read-only ulash
     networks:
       - global-net
 
@@ -25,3 +26,4 @@ networks:
 volumes:
   caddy-data:
   caddy-config:
+
